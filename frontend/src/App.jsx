@@ -3,7 +3,7 @@ import axios from 'axios';
 import { format } from 'date-fns';
 import { PlusCircle, Filter, ArrowUpDown, IndianRupee, Loader2, Trash2, Calendar, Tag, FileText, PieChart } from 'lucide-react';
 
-const API_BASE_URL = 'http://localhost:8000';
+const API_BASE_URL = 'https://fintrack-api-w290.onrender.com';
 
 function App() {
   const [expenses, setExpenses] = useState([]);
@@ -11,7 +11,7 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState(null);
-  
+
   // Filters and Sorting
   const [filterCategory, setFilterCategory] = useState('');
   const [sortOrder, setSortOrder] = useState('date_desc');
@@ -34,11 +34,11 @@ function App() {
         }
       });
       setExpenses(response.data);
-      
+
       // Fetch categories for the filter
       const catRes = await axios.get(`${API_BASE_URL}/categories`);
       setCategories(catRes.data);
-      
+
       setError(null);
     } catch (err) {
       setError('Failed to fetch expenses. Please ensure the backend is running.');
@@ -86,7 +86,7 @@ function App() {
         idempotency_key: idempotencyKey,
         date: new Date(formData.date).toISOString()
       });
-      
+
       // Reset form
       setFormData({
         amount: '',
@@ -94,7 +94,7 @@ function App() {
         description: '',
         date: format(new Date(), 'yyyy-MM-dd')
       });
-      
+
       // Refresh list
       fetchExpenses();
     } catch (err) {
@@ -140,17 +140,17 @@ function App() {
               <PlusCircle size={24} color="var(--primary)" />
               Add Expense
             </h2>
-            
+
             <form onSubmit={handleSubmit}>
               <div className="form-group">
                 <label>Amount (₹)</label>
                 <div style={{ position: 'relative' }}>
                   <IndianRupee size={18} style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
-                  <input 
-                    type="number" 
+                  <input
+                    type="number"
                     name="amount"
                     step="0.01"
-                    placeholder="0.00" 
+                    placeholder="0.00"
                     style={{ paddingLeft: '2.5rem' }}
                     value={formData.amount}
                     onChange={handleInputChange}
@@ -163,10 +163,10 @@ function App() {
                 <label>Category</label>
                 <div style={{ position: 'relative' }}>
                   <Tag size={18} style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
-                  <input 
-                    type="text" 
+                  <input
+                    type="text"
                     name="category"
-                    placeholder="e.g. Food, Rent" 
+                    placeholder="e.g. Food, Rent"
                     style={{ paddingLeft: '2.5rem' }}
                     value={formData.category}
                     onChange={handleInputChange}
@@ -183,8 +183,8 @@ function App() {
                 <label>Date</label>
                 <div style={{ position: 'relative' }}>
                   <Calendar size={18} style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
-                  <input 
-                    type="date" 
+                  <input
+                    type="date"
                     name="date"
                     style={{ paddingLeft: '2.5rem' }}
                     value={formData.date}
@@ -198,9 +198,9 @@ function App() {
                 <label>Description</label>
                 <div style={{ position: 'relative' }}>
                   <FileText size={18} style={{ position: 'absolute', left: '1rem', top: '1rem', color: 'var(--text-muted)' }} />
-                  <textarea 
+                  <textarea
                     name="description"
-                    placeholder="What was this for?" 
+                    placeholder="What was this for?"
                     rows="3"
                     style={{ paddingLeft: '2.5rem' }}
                     value={formData.description}
@@ -213,7 +213,7 @@ function App() {
               <button type="submit" className="btn-primary" style={{ width: '100%' }} disabled={submitting}>
                 {submitting ? <Loader2 className="loader" /> : 'Record Expense'}
               </button>
-              
+
               {error && (
                 <p style={{ color: 'var(--danger)', marginTop: '1rem', fontSize: '0.875rem', textAlign: 'center' }}>
                   {error}
@@ -249,8 +249,8 @@ function App() {
               <div style={{ display: 'flex', gap: '1rem' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', background: 'rgba(255,255,255,0.05)', padding: '0.5rem 1rem', borderRadius: '0.75rem', border: '1px solid var(--glass-border)' }}>
                   <Filter size={16} color="var(--text-muted)" />
-                  <select 
-                    value={filterCategory} 
+                  <select
+                    value={filterCategory}
                     onChange={(e) => setFilterCategory(e.target.value)}
                     style={{ background: 'transparent', border: 'none', padding: 0, fontSize: '0.875rem', width: 'auto' }}
                   >
@@ -258,11 +258,11 @@ function App() {
                     {categories.map(cat => <option key={cat} value={cat}>{cat}</option>)}
                   </select>
                 </div>
-                
+
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', background: 'rgba(255,255,255,0.05)', padding: '0.5rem 1rem', borderRadius: '0.75rem', border: '1px solid var(--glass-border)' }}>
                   <ArrowUpDown size={16} color="var(--text-muted)" />
-                  <select 
-                    value={sortOrder} 
+                  <select
+                    value={sortOrder}
                     onChange={(e) => setSortOrder(e.target.value)}
                     style={{ background: 'transparent', border: 'none', padding: 0, fontSize: '0.875rem', width: 'auto' }}
                   >
