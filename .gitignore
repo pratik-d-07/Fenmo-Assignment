@@ -1,0 +1,24 @@
+# Environments
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# Python caching
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Database
+*.db
+*.sqlite3
+
+# Pytest
+.pytest_cache/
+
+# Ignore default Vite README
+frontend/README.md
+# OS generated files
+.DS_Store
+Thumbs.db
